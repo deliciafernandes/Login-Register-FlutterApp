@@ -10,10 +10,11 @@ class Home extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Abel'),
-      initialRoute: LoginPage.id,
+      initialRoute: RegisterPage.id,
       routes: {
-        LoginPage.id: (context) => LoginPage(),
         RegisterPage.id: (context) => RegisterPage(),
+        LoginPage.id: (context) => LoginPage(),
+        //ForgetPassword.id: (context) => ForgetPassword(),
       },
     );
   }

@@ -88,6 +88,8 @@ class LoginPage extends StatelessWidget {
                   color: Color(0xff447def),
                   onPressed: () {
                     //TODO: Implement login functionality
+                    //print(email);
+                    //print(password);
                   },
                   child: Text(
                     'Login',

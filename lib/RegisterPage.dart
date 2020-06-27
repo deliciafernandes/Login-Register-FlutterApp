@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task/LoginPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 // ignore: must_be_immutable
 class RegisterPage extends StatelessWidget {
@@ -82,7 +83,9 @@ class RegisterPage extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 10.0),
                   color: Color(0xff447def),
                   onPressed: () {
-                    //TODO: Implement login functionality
+                    //TODO: Implement register functionality
+                    //print(email);
+                    //print(password);
                   },
                   child: Text(
                     'Register',
