@@ -13,10 +13,8 @@ class LoginPage extends StatelessWidget {
   String email;
   String password;
 
-  final _auth = FirebaseAuth.instance;
-
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   Future<FirebaseUser> _handleSignIn() async {
     // hold the instance of the authenticated user
     FirebaseUser user;
@@ -41,9 +39,6 @@ class LoginPage extends StatelessWidget {
 
   void onGoogleSignIn(BuildContext context) async {
     FirebaseUser user = await _handleSignIn();
-
-    print('Im here');
-
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -102,6 +97,7 @@ class LoginPage extends StatelessWidget {
                     ),
                     SizedBox(height: 20.0),
                     TextField(
+                      obscureText: true,
                       keyboardType: TextInputType.visiblePassword,
                       onChanged: (value) {
                         password = value;
