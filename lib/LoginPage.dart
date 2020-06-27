@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:task/ForgotPassword.dart';
 import 'package:task/RegisterPage.dart';
+
+import 'Done.dart';
 
 // ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
@@ -7,6 +11,8 @@ class LoginPage extends StatelessWidget {
 
   String email;
   String password;
+
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +79,7 @@ class LoginPage extends StatelessWidget {
                       alignment: Alignment.topRight,
                       child: GestureDetector(
                         onTap: () {
-                          //TODO: Implement forgot password
+                          Navigator.pushNamed(context, ForgotPassword.id);
                         },
                         child: Text(
                           'Forgot Password?',
@@ -86,10 +92,16 @@ class LoginPage extends StatelessWidget {
                 RaisedButton(
                   padding: EdgeInsets.symmetric(vertical: 10.0),
                   color: Color(0xff447def),
-                  onPressed: () {
-                    //TODO: Implement login functionality
-                    //print(email);
-                    //print(password);
+                  onPressed: () async {
+                    try {
+                      final newUser = await _auth.signInWithEmailAndPassword(
+                          email: email, password: password);
+                      if (newUser != null) {
+                        Navigator.pushNamed(context, Done.id);
+                      }
+                    } catch (e) {
+                      print(e);
+                    }
                   },
                   child: Text(
                     'Login',

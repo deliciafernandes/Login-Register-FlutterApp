@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task/Done.dart';
 import 'package:task/LoginPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -9,6 +10,8 @@ class RegisterPage extends StatelessWidget {
   String name;
   String email;
   String password;
+
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -82,10 +85,22 @@ class RegisterPage extends StatelessWidget {
                 RaisedButton(
                   padding: EdgeInsets.symmetric(vertical: 10.0),
                   color: Color(0xff447def),
-                  onPressed: () {
-                    //TODO: Implement register functionality
-                    //print(email);
-                    //print(password);
+                  onPressed: () async {
+                    print(email);
+                    print(password);
+                    try {
+                      final newUser =
+                          await _auth.createUserWithEmailAndPassword(
+                        email: email,
+                        password: password,
+                      );
+                      if (newUser != null) {
+                        print('user authenticated by registration');
+                        Navigator.pushNamed(context, Done.id);
+                      }
+                    } catch (e) {
+                      print(e);
+                    }
                   },
                   child: Text(
                     'Register',

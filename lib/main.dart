@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:task/ForgotPassword.dart';
 import 'package:task/LoginPage.dart';
 import 'package:task/RegisterPage.dart';
+import 'Done.dart';
 
 void main() => runApp(Home());
 
@@ -14,7 +16,8 @@ class Home extends StatelessWidget {
       routes: {
         RegisterPage.id: (context) => RegisterPage(),
         LoginPage.id: (context) => LoginPage(),
-        //ForgetPassword.id: (context) => ForgetPassword(),
+        ForgotPassword.id: (context) => ForgotPassword(),
+        Done.id: (context) => Done(),
       },
     );
   }
