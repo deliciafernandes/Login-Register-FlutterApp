@@ -18,8 +18,11 @@ class GoogleDone extends StatefulWidget {
 
 class _GoogleDone extends State<GoogleDone> {
   Widget check() {
+    print('Happening');
+
     if (widget._user.email != null) {
       return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ClipOval(
               child: Image.network(widget._user.photoUrl,
@@ -36,7 +39,7 @@ class _GoogleDone extends State<GoogleDone> {
               widget._googleSignIn.signOut();
               Navigator.pop(context);
             },
-            child: Text('Google'),
+            child: Text('Google Sign in done!'),
           ),
         ],
       );
@@ -46,7 +49,7 @@ class _GoogleDone extends State<GoogleDone> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: check(),
+      body: Center(child: check()),
     );
   }
 }

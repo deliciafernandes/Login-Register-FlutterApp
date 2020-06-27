@@ -41,7 +41,6 @@ class RegisterPage extends StatelessWidget {
 
   void onGoogleSignIn(BuildContext context) async {
     FirebaseUser user = await _handleSignIn();
-    Navigator.pushNamed(context, Done.id);
 
     Navigator.push(
         context,
