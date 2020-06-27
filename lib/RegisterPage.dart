@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:task/Done.dart';
+import 'package:task/GoogleDone.dart';
 import 'package:task/LoginPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 // ignore: must_be_immutable
 class RegisterPage extends StatelessWidget {
@@ -12,6 +14,40 @@ class RegisterPage extends StatelessWidget {
   String password;
 
   final _auth = FirebaseAuth.instance;
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  Future<FirebaseUser> _handleSignIn() async {
+    // hold the instance of the authenticated user
+    FirebaseUser user;
+    // flag to check whether we're signed in already
+    bool isSignedIn = await _googleSignIn.isSignedIn();
+    if (isSignedIn) {
+      // if so, return the current user
+      user = await _auth.currentUser();
+    } else {
+      final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      // get the credentials to (access / id token)
+      // to sign in via Firebase Authentication
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+      user = (await _auth.signInWithCredential(credential)).user;
+    }
+
+    return user;
+  }
+
+  void onGoogleSignIn(BuildContext context) async {
+    FirebaseUser user = await _handleSignIn();
+    Navigator.pushNamed(context, Done.id);
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => GoogleDone(user, _googleSignIn)));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +178,7 @@ class RegisterPage extends StatelessWidget {
                           side: BorderSide(width: 0.5, color: Colors.grey[400]),
                         ),
                         onPressed: () {
-                          //TODO: Implement gmail functionality
+                          onGoogleSignIn(context);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
