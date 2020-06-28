@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'Done.dart';
 
 // ignore: must_be_immutable
@@ -48,23 +48,21 @@ class ForgotPassword extends StatelessWidget {
                 top: 60.0, bottom: 20.0, left: 20.0, right: 20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
                   'Reset Password',
-                  style: TextStyle(fontSize: 50.0),
+                  style: TextStyle(fontSize: 40.0),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
                       'Enter your email',
                       style: TextStyle(fontSize: 30.0),
                     ),
-                  ],
-                ),
-                Column(
-                  children: [
+                    SizedBox(height: 20.0),
                     TextField(
                       keyboardType: TextInputType.emailAddress,
                       onChanged: (value) {
@@ -74,7 +72,6 @@ class ForgotPassword extends StatelessWidget {
                         hintText: 'Email',
                       ),
                     ),
-                    SizedBox(height: 20.0),
                   ],
                 ),
                 RaisedButton(
@@ -82,16 +79,20 @@ class ForgotPassword extends StatelessWidget {
                   color: Color(0xff447def),
                   onPressed: () {
                     resetPassword(email);
-                    Navigator.pushNamed(context, Done.id);
+                    AwesomeDialog(
+                      context: context,
+                      dialogType: DialogType.SUCCES,
+                      animType: AnimType.SCALE,
+                      title: 'Email Sent ✈️',
+                      desc: 'Check your email to reset password!',
+                      btnCancelOnPress: () {},
+                      btnOkOnPress: () {},
+                    )..show();
                   },
                   child: Text(
                     'Reset Password',
                     style: TextStyle(fontSize: 25.0, color: Colors.white),
                   ),
-                ),
-                Text(
-                  'Check your email to reset password!',
-                  style: TextStyle(fontSize: 25.0),
                 ),
               ],
             ),
