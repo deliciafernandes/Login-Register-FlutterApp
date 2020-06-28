@@ -7,6 +7,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'Done.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
+bool loginFail = false;
+FirebaseUser user;
+
 // ignore: must_be_immutable
 class LoginPage extends StatefulWidget {
   static String id = '/LoginPage';
@@ -21,6 +24,8 @@ class _LoginPageState extends State<LoginPage> {
   String password;
 
   bool _showSpinner = false;
+  final _email = TextEditingController();
+  final _password = TextEditingController();
 
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
@@ -28,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<FirebaseUser> _handleSignIn() async {
     // hold the instance of the authenticated user
-    FirebaseUser user;
+//    FirebaseUser user;
     // flag to check whether we're signed in already
     bool isSignedIn = await _googleSignIn.isSignedIn();
     if (isSignedIn) {
@@ -111,22 +116,28 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       TextField(
                         keyboardType: TextInputType.emailAddress,
+                        controller: _email,
                         onChanged: (value) {
                           email = value;
                         },
                         decoration: InputDecoration(
                           hintText: 'Email',
+                          labelText: 'email',
+                          errorText: loginFail ? 'email not match' : null,
                         ),
                       ),
                       SizedBox(height: 20.0),
                       TextField(
                         obscureText: true,
+                        controller: _password,
                         keyboardType: TextInputType.visiblePassword,
                         onChanged: (value) {
                           password = value;
                         },
                         decoration: InputDecoration(
                           hintText: 'Password',
+                          labelText: 'Password',
+                          errorText: loginFail ? 'password not match' : null,
                         ),
                       ),
                       SizedBox(height: 10.0),
@@ -149,10 +160,11 @@ class _LoginPageState extends State<LoginPage> {
                     padding: EdgeInsets.symmetric(vertical: 10.0),
                     color: Color(0xff447def),
                     onPressed: () async {
-                      setState(() {
-                        _showSpinner = true;
-                      });
+//                      setState(() {
+//                        _showSpinner = true;
+//                      });
                       try {
+                        print('try login');
                         final newUser = await _auth.signInWithEmailAndPassword(
                             email: email, password: password);
                         if (newUser != null) {
@@ -160,10 +172,12 @@ class _LoginPageState extends State<LoginPage> {
                         }
                       } catch (e) {
                         print(e);
+                        setState(() {
+                          _email.clear();
+                          _password.clear();
+                          loginFail = true; //loginFail is bool
+                        });
                       }
-                      setState(() {
-                        _showSpinner = true;
-                      });
                     },
                     child: Text(
                       'Login',

@@ -102,6 +102,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         },
                         decoration: InputDecoration(
                           hintText: 'Full Name',
+                          labelText: 'Full Name',
                         ),
                       ),
                       SizedBox(height: 20.0),
@@ -111,7 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           email = value;
                         },
                         decoration: InputDecoration(
-                          hintText: 'Email',
+                          labelText: 'Email',
                         ),
                       ),
                       SizedBox(height: 20.0),
@@ -122,7 +123,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           password = value;
                         },
                         decoration: InputDecoration(
-                          hintText: 'Password',
+                          labelText: 'Password',
                         ),
                       ),
                       SizedBox(height: 10.0),
