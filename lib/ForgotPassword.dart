@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'Done.dart';
 
 // ignore: must_be_immutable
 class ForgotPassword extends StatelessWidget {
