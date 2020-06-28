@@ -146,9 +146,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           print('user authenticated by registration');
                           Navigator.pushNamed(context, Done.id);
                         }
-                        setState(() {
-                          _showSpinner = false;
-                        });
                       } catch (e) {
                         print(e);
                       }
