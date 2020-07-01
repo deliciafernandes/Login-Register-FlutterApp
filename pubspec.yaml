@@ -22,6 +22,7 @@ dependencies:
 
   google_sign_in: ^4.1.1
 
+  validators: ^2.0.0
 
 dev_dependencies:
   flutter_test:

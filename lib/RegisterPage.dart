@@ -5,6 +5,7 @@ import 'package:task/LoginPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:validators/validators.dart' as validator;
 
 // ignore: must_be_immutable
 class RegisterPage extends StatefulWidget {
@@ -20,6 +21,12 @@ class _RegisterPageState extends State<RegisterPage> {
   String password;
 
   bool _showSpinner = false;
+
+  bool _wrongEmail = false;
+  bool _wrongPassword = false;
+
+  String _emailText = 'Please use a valid email';
+  String _passwordText = 'Please use a strong password';
 
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
@@ -113,6 +120,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         },
                         decoration: InputDecoration(
                           labelText: 'Email',
+                          errorText: _wrongEmail ? _emailText : null,
                         ),
                       ),
                       SizedBox(height: 20.0),
@@ -124,6 +132,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         },
                         decoration: InputDecoration(
                           labelText: 'Password',
+                          errorText: _wrongPassword ? _passwordText : null,
                         ),
                       ),
                       SizedBox(height: 10.0),
@@ -134,20 +143,44 @@ class _RegisterPageState extends State<RegisterPage> {
                     color: Color(0xff447def),
                     onPressed: () async {
                       setState(() {
-                        _showSpinner = true;
+                        _wrongEmail = false;
+                        _wrongPassword = false;
                       });
                       try {
-                        final newUser =
-                            await _auth.createUserWithEmailAndPassword(
-                          email: email,
-                          password: password,
-                        );
-                        if (newUser != null) {
-                          print('user authenticated by registration');
-                          Navigator.pushNamed(context, Done.id);
+                        if (validator.isEmail(email) &
+                            validator.isLength(password, 6)) {
+                          setState(() {
+                            _showSpinner = true;
+                          });
+                          final newUser =
+                              await _auth.createUserWithEmailAndPassword(
+                            email: email,
+                            password: password,
+                          );
+                          if (newUser != null) {
+                            print('user authenticated by registration');
+                            Navigator.pushNamed(context, Done.id);
+                          }
                         }
+
+                        setState(() {
+                          if (!validator.isEmail(email)) {
+                            _wrongEmail = true;
+                          } else if (!validator.isLength(password, 6)) {
+                            _wrongPassword = true;
+                          } else {
+                            _wrongEmail = true;
+                            _wrongPassword = true;
+                          }
+                        });
                       } catch (e) {
-                        print(e);
+                        setState(() {
+                          _wrongEmail = true;
+                          if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
+                            _emailText =
+                                'The email address is already in use by another account';
+                          }
+                        });
                       }
                     },
                     child: Text(

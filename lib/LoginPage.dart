@@ -7,10 +7,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'Done.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-bool wrongEmail = false;
-bool wrongPassword = false;
+bool _wrongEmail = false;
+bool _wrongPassword = false;
 
-FirebaseUser user;
+FirebaseUser _user;
 
 // ignore: must_be_immutable
 class LoginPage extends StatefulWidget {
@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
     bool isSignedIn = await _googleSignIn.isSignedIn();
     if (isSignedIn) {
       // if so, return the current user
-      user = await _auth.currentUser();
+      _user = await _auth.currentUser();
     } else {
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
       final GoogleSignInAuthentication googleAuth =
@@ -45,10 +45,10 @@ class _LoginPageState extends State<LoginPage> {
       // to sign in via Firebase Authentication
       final AuthCredential credential = GoogleAuthProvider.getCredential(
           accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-      user = (await _auth.signInWithCredential(credential)).user;
+      _user = (await _auth.signInWithCredential(credential)).user;
     }
 
-    return user;
+    return _user;
   }
 
   void onGoogleSignIn(BuildContext context) async {
@@ -123,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: InputDecoration(
                           hintText: 'Email',
                           labelText: 'Email',
-                          errorText: wrongEmail ? emailText : null,
+                          errorText: _wrongEmail ? emailText : null,
                         ),
                       ),
                       SizedBox(height: 20.0),
@@ -136,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: InputDecoration(
                           hintText: 'Password',
                           labelText: 'Password',
-                          errorText: wrongPassword ? passwordText : null,
+                          errorText: _wrongPassword ? passwordText : null,
                         ),
                       ),
                       SizedBox(height: 10.0),
@@ -164,8 +164,8 @@ class _LoginPageState extends State<LoginPage> {
                       });
                       try {
                         setState(() {
-                          wrongEmail = false;
-                          wrongPassword = false;
+                          _wrongEmail = false;
+                          _wrongPassword = false;
                         });
                         final newUser = await _auth.signInWithEmailAndPassword(
                             email: email, password: password);
@@ -176,15 +176,15 @@ class _LoginPageState extends State<LoginPage> {
                         print(e.code);
                         if (e.code == 'ERROR_WRONG_PASSWORD') {
                           setState(() {
-                            wrongPassword = true;
+                            _wrongPassword = true;
                           });
                         } else {
                           setState(() {
                             emailText = 'User doesn\'t exist';
                             passwordText = 'Please check your email';
 
-                            wrongPassword = true;
-                            wrongEmail = true;
+                            _wrongPassword = true;
+                            _wrongEmail = true;
                           });
                         }
                       }
