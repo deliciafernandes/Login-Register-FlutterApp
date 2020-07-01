@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:task/Done.dart';
-import 'package:task/GoogleDone.dart';
-import 'package:task/LoginPage.dart';
+import 'package:task/results_screen/Done.dart';
+import 'package:task/results_screen/GoogleDone.dart';
+import 'package:task/main_screens/LoginPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';

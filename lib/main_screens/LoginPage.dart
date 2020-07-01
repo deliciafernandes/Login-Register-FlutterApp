@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:task/ForgotPassword.dart';
-import 'package:task/GoogleDone.dart';
-import 'package:task/RegisterPage.dart';
+import 'package:task/results_screen/ForgotPassword.dart';
+import 'package:task/results_screen/GoogleDone.dart';
+import 'package:task/main_screens/RegisterPage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'Done.dart';
+import '../results_screen/Done.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 bool _wrongEmail = false;

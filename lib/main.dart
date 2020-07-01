@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:task/ForgotPassword.dart';
-import 'package:task/LoginPage.dart';
-import 'package:task/RegisterPage.dart';
-import 'Done.dart';
+import 'package:task/results_screen/ForgotPassword.dart';
+import 'package:task/main_screens/LoginPage.dart';
+import 'package:task/main_screens/RegisterPage.dart';
+import 'results_screen/Done.dart';
 
 void main() => runApp(Home());
 
