@@ -9,23 +9,6 @@ class ForgotPassword extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
 
   String email;
-  String password;
-
-  // ignore: missing_return
-  Future<String> getCurrentUser() async {
-    try {
-      final user = await _auth.currentUser();
-      if (user != null) {
-        email = user.email;
-
-        return email;
-      }
-    } catch (e) {
-      print(e);
-
-      return null;
-    }
-  }
 
   Future<void> resetPassword(String email) async {
     await _auth.sendPasswordResetEmail(email: email);
