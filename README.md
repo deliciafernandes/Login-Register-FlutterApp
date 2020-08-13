@@ -9,12 +9,3 @@
 * For iOS, add your GoogleService-Info.plist inside your project-level Runner folder.
 
 Photo by Kaique Rocha from Pexels
-
-Note: Use email validator package
-import 'package:email_validator/email_validator.dart';
-String emailText = '';
-errorText: email != emailConfirm? 'Emails don\'t match': null,
-if (!EmailValidator.validate(email)) {
-emailText = 'Sorry Invalid email';
-}
-});
